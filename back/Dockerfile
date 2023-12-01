@@ -1,9 +1,11 @@
 FROM rust:1.74
 
-WORKDIR /usr/src/blog
+WORKDIR /app
+
+RUN cargo install cargo-watch
+
 COPY . .
+RUN cargo build --release
 
-RUN cargo install --path .
 EXPOSE 8000
-
-CMD ["back"]
+CMD ["cargo", "watch", "-x", "run"]
