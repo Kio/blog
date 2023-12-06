@@ -9,6 +9,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  front:
+    build:
+      context: front
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front:/app
   db:
     image: postgres
     restart: always
