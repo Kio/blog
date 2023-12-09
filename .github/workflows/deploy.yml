@@ -1,0 +1,21 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-front:
+    runs-on: ubuntu-latest
+    container: node:20
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: corepack enable && cd front && pnpm install
+
+      - name: Build
+        run: cd front && pnpm build
