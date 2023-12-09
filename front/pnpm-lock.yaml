@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@sveltestack/svelte-query':
+    specifier: ^1.6.0
+    version: 1.6.0
+
 devDependencies:
   '@sveltejs/adapter-auto':
     specifier: ^2.0.0
@@ -441,6 +446,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@sveltestack/svelte-query@1.6.0:
+    resolution: {integrity: sha512-C0wWuh6av1zu3Pzwrg6EQmX3BhDZQ4gMAdYu6Tfv4bjbEZTB00uEDz52z92IZdONh+iUKuyo0xRZ2e16k2Xifg==}
+    peerDependencies:
+      broadcast-channel: ^4.5.0
+    peerDependenciesMeta:
+      broadcast-channel:
+        optional: true
+    dev: false
 
   /@types/cookie@0.5.4:
     resolution: {integrity: sha512-7z/eR6O859gyWIAjuvBWFzNURmf2oPBmJlfVWkwehU5nzIyjwBsTh7WMmEEV4JFnHuQ3ex4oyTvfKzcyJVDBNA==}

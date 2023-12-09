@@ -1,4 +1,5 @@
 use actix_web::{get, App, HttpServer, Responder, middleware::Logger, web, HttpRequest, Error};
+use actix_cors::Cors;
 use sea_orm::{Database, DatabaseConnection, EntityTrait, QueryOrder};
 use migration::{Migrator, MigratorTrait};
 use entity::{posts, posts::Entity as Post};
@@ -28,7 +29,10 @@ async fn main() -> std::io::Result<()> {
 
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("info"));
     HttpServer::new(move || {
+        let cors = Cors::default()
+            .allow_any_origin();
         App::new()
+            .wrap(cors)
             .wrap(Logger::default())
             .app_data(web::Data::new(state.clone()))
             .service(hello)
