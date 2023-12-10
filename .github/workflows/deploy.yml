@@ -31,7 +31,7 @@ jobs:
   deploy-back:
     runs-on: ubuntu-latest
 
-    step:
+    steps:
       - name: Checkout
         uses: appleboy/ssh-action@v0.1.10
         with:
