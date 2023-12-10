@@ -18,6 +18,8 @@ jobs:
         run: corepack enable && cd front && pnpm install
 
       - name: Build
+        env:
+          VITE_BACKEND_URL: ${{ secrets.VITE_BACKEND_URL }}
         run: cd front && pnpm build
 
       - name: Copy files
@@ -54,7 +56,19 @@ jobs:
           script: |
             cd /var/www/ivan.konorkin.com/blog/back && \
             cargo build --release && \
-            mv --force target/release/back /var/www/ivan.konorkin.com/back/
+            mv --force target/release/back /var/www/ivan.konorkin.com/back/new_back
 
-
+      - name: Restart server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            cd /var/www/ivan.konorkin.com/back && \
+            killall back && \
+            rm -f back && \
+            mv new_back back && \
+            ./back &
 
