@@ -67,7 +67,7 @@ jobs:
           port: ${{ secrets.REMOTE_SSH_PORT }}
           script: |
             cd /var/www/ivan.konorkin.com/back && \
-            killall back && \
+            killall back || true && \
             rm -f back && \
             mv new_back back && \
             ./back &
