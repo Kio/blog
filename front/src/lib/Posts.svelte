@@ -4,7 +4,7 @@
 	const queryClient = useQueryClient()
 
 	const queryResult = useQuery('posts', () => 
-		fetch('http://localhost:8000').then(res =>
+		fetch(import.meta.env.VITE_BACKEND_URL).then(res =>
 			res.json()
 		)
 	)

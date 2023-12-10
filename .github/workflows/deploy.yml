@@ -27,3 +27,34 @@ jobs:
           cd front && \
           mv build front && \
           scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ../key -P ${{ secrets.REMOTE_SSH_PORT }} -r front ${{ secrets.REMOTE_SSH_USERNAME }}@${{ secrets.REMOTE_SSH_HOST }}:/var/www/ivan.konorkin.com
+
+  deploy-back:
+    runs-on: ubuntu-latest
+
+    step:
+      - name: Checkout
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            cd /var/www/ivan.konorkin.com/blog && \
+            git checkout main && \
+            git pull
+
+      - name: Build
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.REMOTE_SSH_HOST }}
+          username: ${{ secrets.REMOTE_SSH_USERNAME }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          port: ${{ secrets.REMOTE_SSH_PORT }}
+          script: |
+            cd /var/www/ivan.konorkin.com/blog/back && \
+            cargo build --release && \
+            mv --force target/release/back /var/www/ivan.konorkin.com/back/
+
+
+

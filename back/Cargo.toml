@@ -12,6 +12,7 @@ migration = { path = "migration" } # depends on your needs
 
 actix-web = "4"
 actix-cors = "0.6.5"
+dotenv = "0.15.0"
 env_logger = "0.10.1"
 log = "0.4.20"
 sea-orm = { version = "0.12", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }

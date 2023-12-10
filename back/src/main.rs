@@ -1,3 +1,5 @@
+use dotenv::dotenv;
+use std::env;
 use actix_web::{get, App, HttpServer, Responder, middleware::Logger, web, HttpRequest, Error};
 use actix_cors::Cors;
 use sea_orm::{Database, DatabaseConnection, EntityTrait, QueryOrder};
@@ -22,7 +24,9 @@ async fn hello(_req: HttpRequest, data: web::Data<AppState>) -> Result<impl Resp
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let conn= Database::connect("postgres://blog:blog@db/blog").await.unwrap();
+    dotenv().ok();
+    let db_url = env::var("DB_URL").expect("DB_URL must be set");
+    let conn= Database::connect(db_url).await.unwrap();
     Migrator::up(&conn, None).await.unwrap();
 
     let state = AppState { conn };
