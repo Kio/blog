@@ -1,5 +1,6 @@
 <script lant='ts'>
 	import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
+	import PostExcerpt from '$lib/PostExcerpt.svelte'
 
 	const queryClient = useQueryClient()
 
@@ -22,20 +23,7 @@
 		<span>An error has occurred: {$queryResult.error.message}</span>
 	{:else}
 		{#each $queryResult.data as post}
-			<a href='/posts/{post.id}'>
-				<article>
-					<h2>{post.title}</h2>
-					<time datetime='{post.created_at}'>{format_datetime(post.created_at)}</time>
-					<p>{post.excerpt}</p>
-				</article>
-			</a>
+			<PostExcerpt post={post} />
 		{/each}
 	{/if}
 </div>
-
-<style>
-	a {
-		text-decoration: none;
-		color: inherit;
-	}
-</style>
