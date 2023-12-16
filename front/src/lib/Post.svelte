@@ -3,8 +3,8 @@
 
 	const queryClient = useQueryClient()
 
-	const queryResult = useQuery('posts', () => 
-		fetch(import.meta.env.VITE_BACKEND_URL).then(res =>
+	const queryResult = useQuery('post', () => 
+		fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${$$props.id}`).then(res =>
 			res.json()
 		)
 	)
@@ -16,26 +16,18 @@
 </script>
 
 <div>
+	<a href='/'>Back to the Blog</a>
 	{#if $queryResult.isLoading}
 		<span>Loading...</span>
 	{:else if $queryResult.error}
 		<span>An error has occurred: {$queryResult.error.message}</span>
 	{:else}
-		{#each $queryResult.data as post}
-			<a href='/posts/{post.id}'>
-				<article>
-					<h2>{post.title}</h2>
-					<time datetime='{post.created_at}'>{format_datetime(post.created_at)}</time>
-					<p>{post.excerpt}</p>
-				</article>
-			</a>
+		{#each [$queryResult.data] as post}
+			<article>
+				<h2>{post.title}</h2>
+				<time datetime='{post.created_at}'>{format_datetime(post.created_at)}</time>
+				<p>{post.text}</p>
+			</article>
 		{/each}
 	{/if}
 </div>
-
-<style>
-	a {
-		text-decoration: none;
-		color: inherit;
-	}
-</style>

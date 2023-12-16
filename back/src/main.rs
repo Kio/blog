@@ -21,6 +21,13 @@ async fn hello(_req: HttpRequest, data: web::Data<AppState>) -> Result<impl Resp
         .unwrap();
     Ok(web::Json(posts))
 }
+#[get("/posts/{id}")]
+async fn get_post(req: HttpRequest, data: web::Data<AppState>) -> Result<impl Responder, Error> {
+    let conn = &data.conn;
+    let id = req.match_info().get("id").unwrap().parse::<i32>().unwrap();
+    let post = Post::find_by_id(id).one(conn).await.unwrap();
+    Ok(web::Json(post))
+}
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -40,6 +47,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(Logger::default())
             .app_data(web::Data::new(state.clone()))
             .service(hello)
+            .service(get_post)
     })
         .bind(("0.0.0.0", 8000))?
         .run()

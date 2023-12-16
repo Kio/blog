@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./back/src:/app/src
+      - ./back:/app
     environment:
       - DATABASE_URL=postgres://blog:blog@db/blog
     depends_on:

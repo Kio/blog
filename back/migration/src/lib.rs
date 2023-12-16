@@ -2,6 +2,7 @@ pub use sea_orm_migration::prelude::*;
 
 mod m20220101_000001_create_posts;
 mod m20231216_011219_rename_posts_to_post;
+mod m20231216_021716_post_excerpt;
 
 pub struct Migrator;
 
@@ -11,6 +12,7 @@ impl MigratorTrait for Migrator {
         vec![
             Box::new(m20220101_000001_create_posts::Migration),
             Box::new(m20231216_011219_rename_posts_to_post::Migration),
+            Box::new(m20231216_021716_post_excerpt::Migration),
         ]
     }
 }
