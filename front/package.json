@@ -27,6 +27,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltestack/svelte-query": "^1.6.0"
+		"@sveltestack/svelte-query": "^1.6.0",
+		"highlight.js": "^11.9.0",
+		"marked": "^11.1.0",
+		"marked-highlight": "^2.1.0"
 	}
 }
