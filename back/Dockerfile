@@ -2,7 +2,7 @@ FROM rust:1.74
 
 WORKDIR /app
 
-RUN cargo install cargo-watch
+RUN cargo install cargo-watch sea-orm-cli
 
 COPY . .
 

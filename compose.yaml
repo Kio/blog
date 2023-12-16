@@ -7,7 +7,7 @@ services:
     volumes:
       - ./back/src:/app/src
     environment:
-      - DB_URL=postgres://blog:blog@db/blog
+      - DATABASE_URL=postgres://blog:blog@db/blog
     depends_on:
       db:
         condition: service_healthy
