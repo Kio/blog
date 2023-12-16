@@ -7,4 +7,4 @@ RUN cargo install cargo-watch
 COPY . .
 
 EXPOSE 8000
-CMD ["cargo", "watch", "-x", "run"]
+CMD ["cargo", "watch", "-x", "run", "-B", "1"]

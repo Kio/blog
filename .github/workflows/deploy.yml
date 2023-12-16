@@ -70,5 +70,5 @@ jobs:
             killall back || true && \
             rm -f back && \
             mv new_back back && \
-            ./back &
+            nohup ./back &
 

@@ -8,3 +8,9 @@
 <QueryClientProvider client={queryClient}>
 	<Posts />
 </QueryClientProvider>
+
+<style>
+	:global(body) {
+		font-family: "Nunito";
+	}
+</style>
