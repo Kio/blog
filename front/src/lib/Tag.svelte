@@ -2,16 +2,14 @@
 	import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
 	import PostExcerpt from '$lib/PostExcerpt.svelte'
 
-	let queryResult
-	let slug
-	$: $$props, (() => {
-		slug = $$props.slug
-		queryResult = useQuery('tag', () => 
-			fetch(`${import.meta.env.VITE_BACKEND_URL}/tags/${slug}`).then(res =>
-				res.json()
-			)
-		)
-	})()
+	export let slug
+
+	let queryResult = null
+	$: queryResult = useQuery(['tag', slug], () =>
+		 fetch(`${import.meta.env.VITE_BACKEND_URL}/tags/${slug}`).then(res =>
+			 res.json()
+		 )
+	)
 </script>
 
 <div>

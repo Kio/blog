@@ -1,8 +1,9 @@
 <script lang='ts'>
-	import { page } from '$app/stores'
 	import Post from '$lib/Post.svelte'
 
 	export let data
+
+    $: id = data.props.id
 </script>
 
-<Post id={data.props.id}/>
+<Post id={id}/>

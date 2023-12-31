@@ -1,4 +1,4 @@
-<script lant='ts'>
+<script lang='ts'>
 	import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
 	import { marked } from 'marked'
 	import { markedHighlight } from 'marked-highlight'
@@ -15,16 +15,14 @@
 		}
 	}))
 
-	let queryResult
-	let id
-	$: $$props, (() => {
-		id = $$props.id
-		queryResult = useQuery('post', () => 
-			fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${id}`).then(res =>
-				res.json()
-			)
-		)
-	})()
+	export let id
+
+	let queryClient = null
+	$: queryResult = useQuery([`post`, id], () =>
+		 fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${id}`).then(res =>
+			 res.json()
+		 )
+	)
 
 	const format_datetime = (str) => {
 		const date = new Date(str)
