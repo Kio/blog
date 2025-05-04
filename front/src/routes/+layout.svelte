@@ -1,7 +1,6 @@
-<script>
-	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query'
-
-	const queryClient = new QueryClient()
+<script lang="ts">
+	import { QueryClientProvider } from '@sveltestack/svelte-query';
+	import { queryClient } from '$lib/api';
 </script>
 
 <QueryClientProvider client={queryClient}>

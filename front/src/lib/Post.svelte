@@ -5,21 +5,24 @@
 	import hljs from 'highlight.js/lib/core'
 	import javascript from 'highlight.js/lib/languages/javascript'
 	import 'highlight.js/styles/a11y-light.css'
+	import { getPost, postQueryKey } from '$lib/api'
 
 	hljs.registerLanguage('javascript', javascript);
 
-	marked.use(markedHighlight({
-		highlight(code, lang, info) {
-			const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-			return hljs.highlight(code, { language }).value;
-		}
-	}))
+	// Prevent duplicate registration on every page visit
+	if (typeof window !== 'undefined' && !(window as any).__markedConfigured) {
+		marked.use(markedHighlight({
+			highlight(code, lang, info) {
+				const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+				return hljs.highlight(code, { language }).value;
+			}
+		}));
+		(window as any).__markedConfigured = true;
+	}
 
 	export let id: string
 	
-	$: queryResult = useQuery([`post`, id], () =>
-		fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${id}`).then(res => res.json())
-	)
+	$: queryResult = useQuery(postQueryKey(id), () => getPost(id))
 
 	const format_datetime = (str) => {
 		const date = new Date(str)
@@ -28,7 +31,7 @@
 </script>
 
 <div>
-	<a href='/'>Back to the Blog</a>
+	<a sveltekit:prefetch href='/'>Back to the Blog</a>
 	{#if !$queryResult || $queryResult.isLoading}
 		<span>Loading...</span>
 	{:else if $queryResult.error}

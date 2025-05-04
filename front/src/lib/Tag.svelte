@@ -3,7 +3,7 @@
 	import PostExcerpt from '$lib/PostExcerpt.svelte'
 
 	export let slug
-	// Use svelte-query to fetch tag data.
+	
 	$: queryResult = useQuery(['tag', slug], () =>
 		fetch(`${import.meta.env.VITE_BACKEND_URL}/tags/${slug}`).then(res => res.json())
 	)
