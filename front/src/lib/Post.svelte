@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
+	import { useQuery } from '@sveltestack/svelte-query'
 	import { marked } from 'marked'
 	import { markedHighlight } from 'marked-highlight'
 	import hljs from 'highlight.js/lib/core'
@@ -15,13 +15,10 @@
 		}
 	}))
 
-	export let id
-
-	let queryClient = null
+	export let id: string
+	
 	$: queryResult = useQuery([`post`, id], () =>
-		 fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${id}`).then(res =>
-			 res.json()
-		 )
+		fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/${id}`).then(res => res.json())
 	)
 
 	const format_datetime = (str) => {

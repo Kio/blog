@@ -1,14 +1,11 @@
 <script lang='ts'>
-	import { useQuery, useMutation, useQueryClient } from '@sveltestack/svelte-query'
+	import { useQuery } from '@sveltestack/svelte-query'
 	import PostExcerpt from '$lib/PostExcerpt.svelte'
 
 	export let slug
-
-	let queryResult = null
+	// Use svelte-query to fetch tag data.
 	$: queryResult = useQuery(['tag', slug], () =>
-		 fetch(`${import.meta.env.VITE_BACKEND_URL}/tags/${slug}`).then(res =>
-			 res.json()
-		 )
+		fetch(`${import.meta.env.VITE_BACKEND_URL}/tags/${slug}`).then(res => res.json())
 	)
 </script>
 

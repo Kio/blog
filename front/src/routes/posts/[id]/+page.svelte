@@ -2,8 +2,7 @@
 	import Post from '$lib/Post.svelte'
 
 	export let data
-
-    $: id = data.props.id
+	const { id } = data.props
 </script>
 
-<Post id={id}/>
+<Post {id}/>
