@@ -4,9 +4,34 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<!-- 1) Preconnect early to Google’s font servers -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+
+		<!-- 2) Preload the CSS so the browser knows it’s high-priority -->
+		<link
+		rel="preload"
+		href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+		as="style"
+		/>
+
+		<!-- 3) Load it in a non-blocking way -->
+		<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+		media="print"
+		onload="this.media='all'"
+		/>
+
+		<!-- 4) Fallback for no-JS browsers -->
+		<noscript>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+			rel="stylesheet"
+		>
+		</noscript>
+
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
