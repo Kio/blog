@@ -22,7 +22,8 @@
 
 	export let id: string
 	
-	$: queryResult = useQuery(postQueryKey(id), () => getPost(id))
+	const queryResult = useQuery(postQueryKey(id), () => getPost(id));
+	$: data = $queryResult.data;
 
 	const format_datetime = (str) => {
 		const date = new Date(str)
@@ -30,19 +31,36 @@
 	}
 </script>
 
+<svelte:head>
+	{#if data}
+		<title>{data.post.title} | Ivan Konorkin Blog</title>
+		<meta name="description" content={data.post.excerpt} />
+	{/if}
+</svelte:head>
+
 <div>
-	<a sveltekit:prefetch href='/'>Back to the Blog</a>
-	{#if !$queryResult || $queryResult.isLoading}
-		<span>Loading...</span>
+	<a sveltekit:prefetch href="/">Back to the Blog</a>
+
+	{#if $queryResult.isLoading}
+		<span>Loading…</span>
 	{:else if $queryResult.error}
 		<span>An error has occurred: {$queryResult.error.message}</span>
 	{:else}
-		{#each [$queryResult.data] as {post, tags}}
-			<article>
-				<h2>{post.title}</h2>
-				<time datetime='{post.created_at}'>{format_datetime(post.created_at)}</time>
-				<p>{@html marked(post.text)}</p>
-			</article>
-		{/each}
+	<article>
+		<h2>{data.post.title}</h2>
+		<time datetime={data.post.created_at}>
+			{format_datetime(data.post.created_at)}
+		</time>
+		<div>{@html marked(data.post.text)}</div>
+		{#if data.tags?.length}
+			<ul>
+				{#each data.tags as tag}
+					<a sveltekit:prefetch href={`/tags/${tag.slug}`}>
+						<li>{tag.name}</li>
+					</a>
+				{/each}
+			</ul>
+		{/if}
+	</article>
 	{/if}
 </div>
