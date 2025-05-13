@@ -9,14 +9,14 @@ export default defineConfig({
 		viteCompression({
 			algorithm: 'gzip',
 			ext: '.gz',
-			threshold: 10240,
+			threshold: 0,
 			deleteOriginFile: false
 		}),
 
 		viteCompression({
 			algorithm: 'brotliCompress',
 			ext: '.br',
-			threshold: 10240
+			threshold: 0
 		})
 	],
 });
